@@ -1,0 +1,98 @@
+<div class="sidebar mat-elevation-z4">
+  <div class="sidebar-content">
+    <!-- Fixed Logo Section -->
+    <div class="logo-container mat-card">
+      <img
+        src="/assets/CustomLogoSide.png"
+        alt="Xoka Logo"
+        class="company-logo"
+      />
+    </div>
+
+    <!-- Scrollable Navigation Menu -->
+    <div class="nav-menu-wrapper">
+      <nav class="nav-menu">
+        <a
+          mat-button
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+
+        <a
+          mat-button
+          routerLink="/employee"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>people</mat-icon>
+          <span>Employees</span>
+        </a>
+
+        <a
+          mat-button
+          routerLink="/candidate"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>person_add</mat-icon>
+          <span>Candidates</span>
+        </a>
+
+        <a
+          mat-button
+          routerLink="/salary"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>monetization_on</mat-icon>
+          <span>Payroll</span>
+        </a>
+
+        <a
+          mat-button
+          routerLink="/company"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>business</mat-icon>
+          <span>Company</span>
+        </a>
+
+        <a
+          mat-button
+          routerLink="/department"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>domain</mat-icon>
+          <span>Departments</span>
+        </a>
+
+        <a
+          mat-button
+          routerLink="/setting"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="profile mat-card">
+      <img mat-card-avatar src="https://via.placeholder.com/80" alt="Profile" />
+      <div>
+        <p class="role">HR Manager</p>
+        <h3 class="name">John Doe</h3>
+      </div>
+      <a mat-button routerLink="/logout" class="logout">
+        <mat-icon>logout</mat-icon>
+      </a>
+    </div>
+  </div>
+</div>

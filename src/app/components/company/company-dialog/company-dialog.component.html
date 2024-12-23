@@ -1,0 +1,222 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>
+    {{ data?.id ? "Edit Company" : "Add Company" }}
+    <mat-icon class="title-icon">{{
+      data?.id ? "edit" : "add_business"
+    }}</mat-icon>
+  </h2>
+
+  <form class="company-form" #companyForm="ngForm">
+    <div class="form-grid">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Company Name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="data.name"
+          name="name"
+          required
+          placeholder="Enter company name"
+          #nameInput="ngModel"
+        />
+        <mat-icon matPrefix>business</mat-icon>
+        <mat-error *ngIf="nameInput.invalid && nameInput.touched">
+          Company name is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <input
+            matInput
+            [(ngModel)]="data.location"
+            name="location"
+            required
+            placeholder="Enter location"
+            #locationInput="ngModel"
+          />
+          <mat-icon matPrefix>location_on</mat-icon>
+          <mat-error *ngIf="locationInput.invalid && locationInput.touched">
+            Location is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Industry</mat-label>
+          <mat-select
+            [(ngModel)]="data.industry"
+            name="industry"
+            required
+            #industryInput="ngModel"
+          >
+            <mat-option value="technology">Technology</mat-option>
+            <mat-option value="healthcare">Healthcare</mat-option>
+            <mat-option value="finance">Finance</mat-option>
+            <mat-option value="retail">Retail</mat-option>
+            <mat-option value="manufacturing">Manufacturing</mat-option>
+          </mat-select>
+          <mat-icon matPrefix>category</mat-icon>
+          <mat-error *ngIf="industryInput.invalid && industryInput.touched">
+            Industry is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Established Year</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="data.establishedYear"
+            name="establishedYear"
+            required
+            min="1800"
+            max="2024"
+            placeholder="YYYY"
+            #yearInput="ngModel"
+          />
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <mat-error *ngIf="yearInput.invalid && yearInput.touched">
+            Please enter a valid year (1800-2024)
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Employee Count</mat-label>
+          <input
+            matInput
+            type="number"
+            [(ngModel)]="data.employeeCount"
+            name="employeeCount"
+            readonly
+          />
+          <mat-icon matPrefix>people</mat-icon>
+          <mat-hint>This field is automatically calculated</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button mat-button (click)="onCancel()" class="cancel-button">
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSave()"
+        [disabled]="companyForm.invalid"
+        class="save-button"
+      >
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .dialog-container {
+    padding: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  mat-dialog-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1976d2;
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+
+  .title-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .company-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .mat-form-field-prefix {
+    margin-right: 8px;
+    color: #666;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+  }
+
+  .cancel-button,
+  .save-button {
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .save-button {
+    background-color: #1976d2;
+  }
+
+  .save-button[disabled] {
+    background-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.26);
+  }
+
+  mat-error,
+  mat-hint {
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .dialog-container {
+      padding: 16px;
+    }
+
+    .dialog-actions {
+      flex-direction: column-reverse;
+    }
+
+    .cancel-button,
+    .save-button {
+      width: 100%;
+    }
+  }
+</style>

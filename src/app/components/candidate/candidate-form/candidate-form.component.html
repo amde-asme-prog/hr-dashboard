@@ -1,0 +1,226 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>
+      <mat-icon class="header-icon">{{
+        candidate.id ? "edit" : "person_add"
+      }}</mat-icon>
+      {{ candidate.id ? "Edit Candidate" : "Add Candidate" }}
+    </h1>
+  </div>
+
+  <form #candidateForm="ngForm" (ngSubmit)="onSubmit()" class="candidate-form">
+    <div class="form-sections">
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <mat-icon>person_outline</mat-icon>
+          Personal Information
+        </h2>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="candidate.name"
+              name="name"
+              required
+              placeholder="Enter full name"
+              #name="ngModel"
+            />
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="name.invalid && name.touched"
+              >Name is required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              [(ngModel)]="candidate.email"
+              name="email"
+              required
+              placeholder="example@email.com"
+              #email="ngModel"
+            />
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="email.invalid && email.touched">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input
+              matInput
+              [(ngModel)]="candidate.phone"
+              name="phone"
+              required
+              placeholder="(XXX) XXX-XXXX"
+              #phone="ngModel"
+            />
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-error *ngIf="phone.invalid && phone.touched">
+              Phone number is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Company Details Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <mat-icon>business</mat-icon>
+          Company Details
+        </h2>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <mat-select
+              [(ngModel)]="candidate.companyId"
+              name="companyId"
+              (selectionChange)="onCompanyChange()"
+              required
+              #company="ngModel"
+            >
+              <mat-option
+                *ngFor="let company of companies"
+                [value]="company.id"
+              >
+                {{ company.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>business</mat-icon>
+            <mat-error *ngIf="company.invalid && company.touched">
+              Company is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select
+              [(ngModel)]="candidate.departmentId"
+              name="departmentId"
+              required
+              #department="ngModel"
+            >
+              <mat-option
+                *ngFor="let department of filteredDepartments"
+                [value]="department.id"
+              >
+                {{ department.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>domain</mat-icon>
+            <mat-error *ngIf="department.invalid && department.touched">
+              Department is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Application Details Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <mat-icon>description</mat-icon>
+          Application Details
+        </h2>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Resume URL</mat-label>
+            <input
+              matInput
+              [(ngModel)]="candidate.resumeUrl"
+              name="resumeUrl"
+              required
+              placeholder="https://example.com/resume"
+              #resumeUrl="ngModel"
+            />
+            <mat-icon matPrefix>link</mat-icon>
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="openResumeUrl()"
+              *ngIf="candidate.resumeUrl"
+              type="button"
+            >
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+            <mat-error *ngIf="resumeUrl.invalid && resumeUrl.touched">
+              Resume URL is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Application Date</mat-label>
+            <input
+              matInput
+              type="date"
+              [(ngModel)]="candidate.applicationDate"
+              name="applicationDate"
+              required
+              #applicationDate="ngModel"
+            />
+            <mat-icon matPrefix>event</mat-icon>
+            <mat-error
+              *ngIf="applicationDate.invalid && applicationDate.touched"
+            >
+              Application date is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="status-field">
+            <mat-label>Status</mat-label>
+            <mat-select
+              [(ngModel)]="candidate.status"
+              name="status"
+              required
+              #status="ngModel"
+            >
+              <mat-option value="Pending" class="status-pending">
+                <mat-icon>hourglass_empty</mat-icon> Pending
+              </mat-option>
+              <mat-option value="Shortlisted" class="status-shortlisted">
+                <mat-icon>playlist_add_check</mat-icon> Shortlisted
+              </mat-option>
+              <mat-option value="Rejected" class="status-rejected">
+                <mat-icon>close</mat-icon> Rejected
+              </mat-option>
+              <mat-option value="Accepted" class="status-accepted">
+                <mat-icon>check_circle</mat-icon> Accepted
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>flag</mat-icon>
+            <mat-error *ngIf="status.invalid && status.touched">
+              Status is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div mat-dialog-actions class="dialog-actions">
+      <button
+        mat-button
+        type="button"
+        (click)="onNoClick()"
+        class="cancel-button"
+      >
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="!candidateForm.valid"
+        [mat-dialog-close]="candidate"
+        class="submit-button"
+      >
+        <mat-icon>{{ candidate.id ? "save" : "add" }}</mat-icon>
+        {{ candidate.id ? "Update" : "Save" }}
+      </button>
+    </div>
+  </form>
+</div>

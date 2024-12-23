@@ -1,0 +1,57 @@
+.dialog-container {
+  width: 500px;
+  max-height: 90vh;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.dialog-header {
+  background: linear-gradient(to right, #1976d2, #2196f3);
+  margin: -24px -24px 16px -24px;
+  padding: 16px 24px;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mat-dialog-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-dialog-actions {
+  margin: 16px -24px -24px -24px;
+  padding: 12px 24px;
+  background: #f5f5f5;
+  border-radius: 0 0 4px 4px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+button .mat-icon {
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+@media (max-width: 600px) {
+  .dialog-container {
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

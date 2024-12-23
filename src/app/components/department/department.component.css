@@ -1,0 +1,57 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.header h2 {
+  font-size: 24px; /* Larger and bolder title */
+  color: #333; /* Darker color for the title */
+}
+
+.mat-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden; /* Clean overflow effect */
+}
+
+.mat-table-style {
+  text-align: left; /* Align text to the left */
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden; /* Clean overflow effect */
+}
+
+.header-cell {
+  background-color: #007bff; /* Header background color */
+  color: #ffffff; /* White text color */
+  padding: 12px 10px; /* Header cell padding */
+  text-align: left; /* Align header text to left */
+}
+
+td {
+  padding: 16px 10px; /* Cell padding */
+}
+
+.mat-row:nth-child(even) {
+  background-color: #f2f2f2; /* Alternating row colors */
+}
+
+.mat-row:hover {
+  background-color: #e3f2fd; /* Highlight row on hover */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-start; /* Space between action buttons */
+}
+
+/* Icon button styles */
+.mat-icon-button {
+  color: #eb430f; /* Color for icon buttons */
+}
+
+.mat-icon-button:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
+}

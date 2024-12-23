@@ -1,0 +1,170 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>
+      <mat-icon>{{ data.salary.id ? "edit" : "add" }}</mat-icon>
+      {{ data.salary.id ? "Edit Salary" : "Add Salary" }}
+    </h1>
+  </div>
+
+  <div mat-dialog-content class="form-container">
+    <div class="salary-card">
+      <!-- Organization Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <mat-icon>business</mat-icon>
+          Organization Details
+        </h2>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <mat-select
+              [(ngModel)]="data.salary.companyId"
+              (selectionChange)="onCompanyChange($event)"
+              required
+              #company="ngModel"
+            >
+              <mat-option
+                *ngFor="let company of data.companies"
+                [value]="company.id"
+              >
+                <mat-icon class="option-icon">domain</mat-icon>
+                {{ company.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>business</mat-icon>
+            <mat-error *ngIf="company.invalid && company.touched">
+              Company is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select
+              [(ngModel)]="data.salary.departmentId"
+              required
+              #department="ngModel"
+            >
+              <mat-option
+                *ngFor="let department of filteredDepartments"
+                [value]="department.id"
+              >
+                <mat-icon class="option-icon">groups</mat-icon>
+                {{ department.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>domain</mat-icon>
+            <mat-error *ngIf="department.invalid && department.touched">
+              Department is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Salary Details Section -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <mat-icon>payments</mat-icon>
+          Salary Components
+        </h2>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Base Salary</mat-label>
+            <input
+              matInput
+              [(ngModel)]="data.salary.baseSalary"
+              type="number"
+              (ngModelChange)="onSalaryChange()"
+              required
+              min="0"
+              #baseSalary="ngModel"
+              placeholder="0.00"
+            />
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <mat-error *ngIf="baseSalary.invalid && baseSalary.touched">
+              Valid base salary is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Bonuses</mat-label>
+            <input
+              matInput
+              [(ngModel)]="data.salary.bonuses"
+              type="number"
+              (ngModelChange)="onSalaryChange()"
+              required
+              min="0"
+              #bonuses="ngModel"
+              placeholder="0.00"
+            />
+            <mat-icon matPrefix>add_circle</mat-icon>
+            <mat-error *ngIf="bonuses.invalid && bonuses.touched">
+              Valid bonus amount is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Deductions</mat-label>
+            <input
+              matInput
+              [(ngModel)]="data.salary.deductions"
+              type="number"
+              (ngModelChange)="onSalaryChange()"
+              required
+              min="0"
+              #deductions="ngModel"
+              placeholder="0.00"
+            />
+            <mat-icon matPrefix>remove_circle</mat-icon>
+            <mat-error *ngIf="deductions.invalid && deductions.touched">
+              Valid deduction amount is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Net Salary Section -->
+      <div class="net-salary-section">
+        <div class="net-salary-card">
+          <div class="net-salary-label">
+            <mat-icon>account_balance_wallet</mat-icon>
+            <span>Net Salary</span>
+          </div>
+          <div class="net-salary-amount">
+            <span class="currency">$</span>
+            <input
+              matInput
+              [(ngModel)]="data.salary.netSalary"
+              type="number"
+              readonly
+              class="net-salary-input"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="dialog-actions">
+    <button
+      mat-button
+      type="button"
+      (click)="onNoClick()"
+      class="cancel-button"
+    >
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      type="submit"
+      color="primary"
+      [mat-dialog-close]="data"
+      cdkFocusInitial
+      class="save-button"
+    >
+      <mat-icon>{{ data.salary.id ? "save" : "add" }}</mat-icon>
+      {{ data.salary.id ? "Update" : "Save" }}
+    </button>
+  </div>
+</div>

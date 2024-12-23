@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="header">
+    <h2>Salary Management</h2>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      Add Salary
+    </button>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="salaries"
+    class="mat-elevation-z8 mat-table-style"
+  >
+    <ng-container matColumnDef="company">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Company</th>
+      <td mat-cell *matCellDef="let salary">
+        {{ getCompanyName(salary.companyId) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Department</th>
+      <td mat-cell *matCellDef="let salary">
+        {{ getDepartmentName(salary.departmentId) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="baseSalary">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Base Salary</th>
+      <td mat-cell *matCellDef="let salary">
+        {{ salary.baseSalary | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="bonuses">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Bonuses</th>
+      <td mat-cell *matCellDef="let salary">{{ salary.bonuses | currency }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="deductions">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Deductions</th>
+      <td mat-cell *matCellDef="let salary">
+        {{ salary.deductions | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="netSalary">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Net Salary</th>
+      <td mat-cell *matCellDef="let salary">
+        {{ salary.netSalary | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Actions</th>
+      <td mat-cell *matCellDef="let salary">
+        <div class="action-buttons">
+          <button mat-icon-button (click)="openDialog(salary)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteSalary(salary.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

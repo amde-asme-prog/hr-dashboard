@@ -1,0 +1,155 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-bar">
+        <mat-label>Search across dashboard</mat-label>
+        <input matInput placeholder="Type to search..." />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="header-actions">
+      <button
+        mat-icon-button
+        class="notification-btn"
+        [matBadge]="3"
+        matBadgeColor="warn"
+      >
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button mat-button class="user-profile">
+        <img src="assets/avatar.png" alt="User" class="avatar" />
+        <span>John Doe</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <div class="stats-grid">
+    <mat-card class="stat-card employees">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Employees</span>
+          <h2>{{ totalEmployees }}</h2>
+          <p class="trend positive">
+            <mat-icon>trending_up</mat-icon> 12% from last month
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card jobs">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>work</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Active Jobs</span>
+          <h2>{{ activeJobs }}</h2>
+          <p class="trend positive">
+            <mat-icon>trending_up</mat-icon> 5% from last month
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card applications">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>description</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">New Applications</span>
+          <h2>{{ newApplications }}</h2>
+          <p class="trend negative">
+            <mat-icon>trending_down</mat-icon> 8% from last month
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card payroll">
+      <mat-card-content>
+        <div class="stat-icon">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Payroll</span>
+          <h2>${{ totalPayroll | number }}</h2>
+          <p class="trend positive">
+            <mat-icon>trending_up</mat-icon> 15% from last month
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="activities-card">
+    <mat-card-header>
+      <mat-card-title>Recent Activities</mat-card-title>
+      <button mat-button color="primary">View All</button>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="recentActivities" class="activities-table">
+        <ng-container matColumnDef="employee">
+          <th mat-header-cell *matHeaderCellDef>Employee</th>
+          <td mat-cell *matCellDef="let activity">
+            <div class="employee-cell">
+              <img
+                [src]="activity.avatar"
+                alt="Employee"
+                class="employee-avatar"
+              />
+              <span>{{ activity.employee }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let activity">
+            <span class="department-badge">{{ activity.department }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let activity">
+            <span
+              class="status-badge"
+              [ngClass]="'status-' + activity.status.toLowerCase()"
+            >
+              {{ activity.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let activity">
+            <div class="action-cell">
+              <span>{{ activity.action }}</span>
+              <span class="action-time">{{
+                activity.time | date : "shortTime"
+              }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="['employee', 'department', 'status', 'action']"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: ['employee', 'department', 'status', 'action']
+          "
+        ></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

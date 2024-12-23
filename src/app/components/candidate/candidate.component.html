@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="header">
+    <h2>Candidate Management</h2>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      Add Candidate
+    </button>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="candidates"
+    class="mat-elevation-z8 mat-table-style"
+  >
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Name</th>
+      <td mat-cell *matCellDef="let candidate">{{ candidate.name }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Email</th>
+      <td mat-cell *matCellDef="let candidate">{{ candidate.email }}</td>
+    </ng-container>
+
+    <!-- Phone Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Phone</th>
+      <td mat-cell *matCellDef="let candidate">{{ candidate.phone }}</td>
+    </ng-container>
+
+    <!-- Position Applied Column -->
+    <ng-container matColumnDef="positionApplied">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">
+        Position Applied
+      </th>
+      <td mat-cell *matCellDef="let candidate">
+        {{ getPositionApplied(candidate.departmentId, candidate.companyId) }}
+      </td>
+    </ng-container>
+
+    <!-- Resume URL Column -->
+    <ng-container matColumnDef="resumeUrl">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Resume</th>
+      <td mat-cell *matCellDef="let candidate">
+        <a [href]="candidate.resumeUrl" target="_blank" mat-button
+          >View Resume</a
+        >
+      </td>
+    </ng-container>
+
+    <!-- Application Date Column -->
+    <ng-container matColumnDef="applicationDate">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">
+        Application Date
+      </th>
+      <td mat-cell *matCellDef="let candidate">
+        {{ candidate.applicationDate | date }}
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Status</th>
+      <td mat-cell *matCellDef="let candidate">
+        <span
+          [ngClass]="{
+            pending: candidate.status === 'Pending',
+            shortlisted: candidate.status === 'Shortlisted',
+            rejected: candidate.status === 'Rejected',
+            accepted: candidate.status === 'Accepted'
+          }"
+          class="status-badge"
+        >
+          {{ candidate.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="header-cell">Actions</th>
+      <td mat-cell *matCellDef="let candidate">
+        <div class="action-buttons">
+          <button
+            mat-icon-button
+            (click)="openDialog(candidate)"
+            aria-label="Edit candidate"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deleteCandidate(candidate.id)"
+            aria-label="Delete candidate"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
